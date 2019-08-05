@@ -18,10 +18,12 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping(value = {"/eregistrar/students/list"})
-    public ModelAndView listStudents() {
+    @RequestMapping(value = {"/eregistrar/students/list"})
+    public ModelAndView listStudents(@RequestParam(defaultValue = "0") int pageno) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("students", studentService.getAllStudentsSorted(""));
+        modelAndView.addObject("pageCurrent", pageno);
+        modelAndView.addObject("flashback", "/eregistrar/students/list");
+        modelAndView.addObject("students", studentService.getAllStudents(pageno));
         modelAndView.setViewName("students/list");
         return modelAndView;
     }
@@ -40,8 +42,7 @@ public class StudentController {
                 return "students/new";
             }
             student = studentService.saveStudent(student);
-            new RedirectView("/eregistrar/students/list");
-            return "redirect: /eregistrar/students/list";
+            return "redirect:/eregistrar/students/list";
     }
 
     @GetMapping(value = {"/eregistrar/students/edit/{studentId}"})
@@ -52,18 +53,6 @@ public class StudentController {
             return "students/edit";
         }
         return "students/list";
-    }
-
-    @PostMapping(value = {"/eregistrar/students/edit"})
-    public String updateStudent(@Valid @ModelAttribute("student") Student student,
-                             BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("errors", bindingResult.getAllErrors());
-            return "students/edit";
-        }
-        student = studentService.saveStudent(student);
-        new RedirectView("/eregistrar/students/list");
-        return "redirect:/eregistrar/students/list";
     }
 
     @GetMapping(value = {"/eregistrar/students/delete/{studentId}"})
