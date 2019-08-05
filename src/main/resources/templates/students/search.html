@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.2/cerulean/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EmRcsPP774S9MOi4ywB+JXUWjYnBdyInMzG2XsC5siZEUpexqxOMJW358dCYEjPu" crossorigin="anonymous">
+    <title>Search</title>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/eregistrar/home">Home</a>
+        <div class="collapse navbar-collapse" id="navbarColor01" style="margin: 10px">
+            <form>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </form>
+        </div>
+        <div style="float: right;">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search Student">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+</div>
+<div>
+    <p></p>
+    <h1>Search results</h1>
+    <p></p>
+</div>
+<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#Student ID</th>-->
+            <th scope="col">Student Number</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Middle Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">CGPA</th>
+            <!--                <th scope="col">Enrollment Date</th>-->
+            <th scope="col">Is International</th>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student,iterStat : ${students}">
+            <th scope="row" th:text="${iterStat.count}"></th>
+            <td th:text="${student.studentNumber}"></td>
+            <td th:text="${student.firstName}"></td>
+            <td th:text="${student.middleName}"></td>
+            <td th:text="${student.lastName}"></td>
+            <td th:text="${student.cgpa}"></td>
+            <!--                    <td th:text="${student.enrollmentDate}"></td>-->
+            `   <td th:text="${student.isInternational}"></td>
+            <td><a th:href="@{'/eregistrar/students/edit/{studentId}'(studentId=${student.studentID})}">Edit</a></td>
+            <td>
+                <a data-toggle="modal" data-target="#confirmDeleteBookModal" th:href="@{'/eregistrar/students/delete/'
+                        + ${student.studentID}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

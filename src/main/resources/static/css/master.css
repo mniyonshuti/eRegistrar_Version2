@@ -1,0 +1,15 @@
+.textfieldSize {
+    width: 500px;
+    height: 40px;
+    border: 2px solid #4CAF50;
+
+}
+.labelNiyo {
+    width: 200px;
+    margin-left: 40px;
+    font-size: 150%;
+}
+
+.sizefromLeft{
+    margin-left: 40px;
+}
